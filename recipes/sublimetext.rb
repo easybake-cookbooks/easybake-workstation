@@ -10,7 +10,10 @@ link "/opt/SublimeText2" do
 end
 
 file "/etc/profile.d/sublime_path.sh" do
-  content "export PATH=$PATH:/opt/SublimeText2\n"
+  content <<-EOS
+    export PATH=$PATH:/opt/SublimeText2
+    export EDITOR=/opt/SublimeText2/sublime_text
+  EOS
   mode 00644
 end
 

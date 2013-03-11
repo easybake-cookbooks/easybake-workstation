@@ -2,9 +2,7 @@ dpkg_package 'vagrant' do
   source node['easybake-workstation']['ingredients']['vagrant']['file']
 end
 
-
 vagrant_gem_binary = '/opt/vagrant/embedded/bin/gem'
-chef_gem_binary = '/opt/chef/embedded/bin/gem'
 
 gem_package 'vagrant-windows' do
   gem_binary vagrant_gem_binary
@@ -18,6 +16,13 @@ gem_package 'em-winrm' do
   #source knife_acl_gem
 end
 
+chef_gem_binary = '/opt/chef/embedded/bin/gem'
+
+gem_package 'knife-windows' do
+  gem_binary chef_gem_binary
+  options '--no-ri --no-rdoc'
+  #source knife_acl_gem
+end
 
 veewee_gem_dir = ::File.join(Chef::Config.file_cache_path, 'veewee-gem')
 #veewee_gem_dir = ::File.join('/tmp', 'veewee-gem')
@@ -42,13 +47,11 @@ gem_package 'veewee' do
   source veewee_gem
 end
 
-
 link "/opt/vagrant/bin/veewee" do
   to "/opt/vagrant/embedded/bin/veewee"
 end
 
 package 'openjdk-6-jre-headless'
-
 
 file "/etc/profile.d/vagrant_path.sh" do
   content "export PATH=$PATH:/opt/vagrant/bin\n"
