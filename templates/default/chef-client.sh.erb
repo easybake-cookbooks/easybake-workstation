@@ -1,0 +1,7 @@
+#!/bin/bash -eux
+
+# let's find a way to create a version that looks to our fileserver
+# probably based on something like this
+# https://github.com/mattray/pxe_dust-cookbook/blob/master/templates/default/chef-bootstrap.sh.erb
+wget -O - http://<%=node.ipaddress%>/chef.deb > /tmp/chef.deb
+dpkg -i /tmp/chef.deb

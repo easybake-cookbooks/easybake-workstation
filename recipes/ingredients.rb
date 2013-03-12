@@ -21,7 +21,8 @@ node['easybake-workstation']['ingredients'].each do |data_bag,attrs|
     query += " AND os_#{node.platform}:#{node.platform_version} AND arch:#{node.kernel.machine}"
   end
   # if there isn't a version for this platform, we must want them all (windows, ubuntu)
- # Chef::Log.fatal all_artifacts.map{|v|v}
+  # Chef::Log.fatal all_artifacts.map{|v|v}
+  # we need to update this to actually grab the virtualbox extensions and guest util iso
 
   search(data_bag,query).each do |ing|
 
