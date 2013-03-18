@@ -13,13 +13,20 @@ node['easybake-workstation']['ingredients'].each do |data_bag,attrs|
     Chef::Log.fatal all_artifacts
   end
   
-  node.default['easybake-workstation']['ingredients'][data_bag]['version']=all_artifacts.map{|v|
-    v['version']}.flatten.uniq.sort.last
+  node.default['easybake-workstation']['ingredients'][data_bag]['semantic_version']=all_artifacts.map{|v|
+    v['semantic_version']}.flatten.uniq.sort{|a,b|c = Chef::VersionConstraint.new(">= #{a}").include?(b) ; c ? 0 : 1}.last
   #  end
-  query = "version:#{node['easybake-workstation']['ingredients'][data_bag]['version']}"
+  query = "semantic_version:#{node['easybake-workstation']['ingredients'][data_bag]['semantic_version']}"
+  sorted=all_artifacts.map{|v|
+    Chef::Log.fatal v['semantic_version']
+    v['semantic_version']}.flatten.uniq.sort {|a,b|c = Chef::VersionConstraint.new(">= #{a}").include?(b) ; c ? 0 : 1}
+
+  Chef::Log.fatal "sorted:#{sorted}"
+  Chef::Log.fatal query
   if all_artifacts.map{|v|v['os'].keys}.flatten.uniq.sort.last.include? node.platform
     query += " AND os_#{node.platform}:#{node.platform_version} AND arch:#{node.kernel.machine}"
   end
+  Chef::Log.fatal "super: #{query}"
   # if there isn't a version for this platform, we must want them all (windows, ubuntu)
   # Chef::Log.fatal all_artifacts.map{|v|v}
   # we need to update this to actually grab the virtualbox extensions and guest util iso
