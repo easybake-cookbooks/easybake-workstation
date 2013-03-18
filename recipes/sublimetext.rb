@@ -17,28 +17,28 @@ file "/etc/profile.d/sublime_path.sh" do
   mode 00644
 end
 
-# hardcoding for now... FIXME later
-username='user'
+easyuser=node['easybake-workstation']['user']['login']
 
-cwd = "/home/#{username}/"
+# look up easyuser homedir?
+cwd = "/home/#{easyuser}/"
 # directory doesn't set owner for containing directories... 
 # welcome to my cheesy work around
 %w{.config sublime-text-2 Packages User}.each do |subdir|
   cwd = ::File.join(cwd,subdir)
   directory cwd do
     recursive true
-    owner "#{username}"
+    owner "#{easyuser}"
   end
 end
 
 package "ttf-inconsolata"
 
-cookbook_file "/home/#{username}/.config/sublime-text-2/Packages/User/Preferences.sublime-settings" do
+cookbook_file "/home/#{easyuser}/.config/sublime-text-2/Packages/User/Preferences.sublime-settings" do
   source "Preferences.sublime-settings"
-  owner "#{username}"
+  owner "#{easyuser}"
 end
 
-cookbook_file "/home/#{username}/.config/sublime-text-2/Packages/User/Ruby.sublime-settings" do
+cookbook_file "/home/#{easyuser}/.config/sublime-text-2/Packages/User/Ruby.sublime-settings" do
   source "Ruby.sublime-settings"
-  owner "#{username}"
+  owner "#{easyuser}"
 end

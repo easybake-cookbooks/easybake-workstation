@@ -1,3 +1,5 @@
+Chef::Log.fatal "Vagrant: #{node['easybake-workstation']['ingredients']['vagrant']}"
+
 dpkg_package 'vagrant' do
   source node['easybake-workstation']['ingredients']['vagrant']['file']
 end
