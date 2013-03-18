@@ -5,3 +5,5 @@ default['easybake-workstation']['ingredients']['virtualbox']['desc']='Virtualbox
 default['easybake-workstation']['ingredients']['vagrant']['desc']='Vagrant'
 default['easybake-workstation']['ingredients']['sublimetext']['desc']='Sublime Text'
 #default['easybake-workstation']['ingredients']['chef']['desc']='Sublime Text'
+default['easybake-workstation']['user']['login']='user'
+default['easybake-workstation']['user']['group']='user'
